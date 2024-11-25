@@ -1,9 +1,22 @@
-version: "3.7"
+volumes:
+  pgdata:
+
 services:
   juice-shop:
     build: ./juice-shop
     ports:
       - "3000:3000"
+
+  database:
+    build: ./database
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: projetcis
+      POSTGRES_PASSWORD: pr0j3tc1s
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   waf:
     image: owasp/modsecurity-crs:4.7.0-nginx-202410090410
     ports:
