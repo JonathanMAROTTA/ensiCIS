@@ -1,0 +1,20 @@
+---
+- name: Deploy Juice Shop to EKS
+  hosts: localhost
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Ensure kubeconfig exists
+      stat:
+        path: "{{ kubeconfig_path }}"
+      register: kubeconfig_status
+
+    - name: Fail if kubeconfig is missing
+      fail:
+        msg: "Kubeconfig file not found at {{ kubeconfig_path }}. Ensure you have updated your kubeconfig."
+      when: not kubeconfig_status.stat.exists
+
+    - name: Create Kubernetes namespace and deploy Juice Shop
+      kubernetes.core.k8s:
+        kubeconfig: "{{ kubeconfig_path }}"
+        definition: "{{ lookup('template', 'templates/juice-shop-deployment.yaml.j2') }}"

@@ -1,0 +1,25 @@
+terraform_deploy:
+  stage: deploy
+  image: alpine/gitlab-ansible-terraform:latest
+  before_script:
+    - echo "Installing AWS CLI"
+    - apk add --no-cache python3 py3-pip curl
+    - pip install awscli
+  script:
+    - echo "Applying the terraform plan to generate the ansible inventory"
+    
+    - cd terraform
+    - terraform init
+    - terraform apply -auto-approve    
+    - cd ..
+
+    - echo "Configuring Kube config"
+    - aws eks update-kubeconfig --region "us-east-1" --name "eks-simple"
+
+    - echo "Deploying the ansible playbook"
+    - cd ansible
+    - ansible-playbook -i inventory.ini playbook.yml
+
+    - echo "DNS Name of the Load Balancer"
+    - aws elb describe-load-balancers --query "LoadBalancerDescriptions[1].DNSName" --output text 
+  when: manual
