@@ -1,0 +1,6 @@
+kubeconfig_path: "~/.kube/config"  # Path to your kubeconfig
+namespace: "juice-shop"           # Namespace to deploy Juice Shop
+app_name: "juice-shop"            # Application name
+app_image: "bkimminich/juice-shop:latest"  # Docker image for Juice Shop
+app_port: 3000                    # Application container port
+replicas: 2                       # Number of replicas

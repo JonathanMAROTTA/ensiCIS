@@ -1,0 +1,7 @@
+stages:
+  - deploy
+  - destroy
+
+include:
+  - local: 'ci/terraform/deploy.yml'
+  - local: 'ci/terraform/destroy.yml'
