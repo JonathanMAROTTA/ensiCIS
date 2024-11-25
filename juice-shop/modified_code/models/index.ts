@@ -25,8 +25,10 @@ import { UserModelInit } from './user'
 import { WalletModelInit } from './wallet'
 import { Sequelize, Transaction } from 'sequelize'
 
+const dbPassword = process.env.DB_PASSWORD
+
 /* jslint node: true */
-const sequelize = new Sequelize('projetcis', 'projetcis', 'pr0j3tc1s', {
+const sequelize = new Sequelize('projetcis', 'projetcis', dbPassword, {
   host: 'database',
   port: 5432,
   dialect: 'postgres',

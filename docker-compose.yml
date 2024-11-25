@@ -6,6 +6,8 @@ services:
     build: ./juice-shop
     ports:
       - "3000:3000"
+    environment:
+      DB_PASSWORD: pr0j3tc1s
 
   database:
     build: ./database
