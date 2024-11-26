@@ -20,6 +20,18 @@ module "eks" {
   subnet_ids     = module.vpc.subnet_ids
 }
 
+module "juice_shop_repo" {
+  source               = "./modules/ecr_repo"
+  repository_name      = "juice-shop"
+  image_tag_mutability = "MUTABLE"
+  scan_on_push         = true       # Scan for security vulnerabilities
+  enable_lifecycle_policy = true
+  lifecycle_policy_days   = 30
+  tags = {
+    Application = "Juice Shop"
+  }
+}
+
 terraform {
   backend "s3" {
     bucket         = "cis-my-tfstate-bucket"

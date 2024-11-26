@@ -1,6 +1,23 @@
-kubeconfig_path: "~/.kube/config"  # Path to your kubeconfig
-namespace: "juice-shop"           # Namespace to deploy Juice Shop
-app_name: "juice-shop"            # Application name
-app_image: "bkimminich/juice-shop:latest"  # Docker image for Juice Shop
-app_port: 3000                    # Application container port
-replicas: 2                       # Number of replicas
+# This file should be encrypted with hashicorp vault in the future !
+
+namespace: juice-shop
+kubeconfig_path: "~/.kube/config"
+
+# App Configuration
+app_name: juice-shop-app
+app_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:app-latest
+app_port: 3000
+app_replicas: 1
+
+# Database Configuration
+db_service_name: database
+db_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
+db_port: 5432
+db_user: projetcis
+db_volume_claim: pgdata-pvc
+db_replicas: 1
+
+# Secrets
+secret_name: juice-shop-secrets
+db_password: "pr0j3tc1s"
+postgres_password: "pr0j3tc1s"

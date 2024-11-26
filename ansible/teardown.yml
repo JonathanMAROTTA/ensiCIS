@@ -1,22 +1,13 @@
+---
 - name: Tear down Kubernetes resources
   hosts: localhost
   vars_files:
     - vars.yml
   tasks:
-    - name: Delete all resources in the Juice Shop namespace
-      kubernetes.core.k8s:
-        kubeconfig: "{{ kubeconfig_path }}"
-        state: absent
-        namespace: juice-shop
-        api_version: v1
-        kind: Namespace
-        name: juice-shop
-        wait: true
-
-    - name: Ensure Juice Shop namespace is deleted
+    - name: Delete the Juice Shop namespace and all resources within it
       kubernetes.core.k8s:
         kubeconfig: "{{ kubeconfig_path }}"
         state: absent
         kind: Namespace
-        name: juice-shop
+        name: "{{ namespace }}"
         wait: true
