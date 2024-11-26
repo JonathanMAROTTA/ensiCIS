@@ -8,19 +8,27 @@ server {
     ssl_certificate_key /etc/nginx/conf/server.key;
     
     # Enable ModSecurity
-    modsecurity on;
+    modsecurity on;tp_upstream_check_module.so
     modsecurity_rules_file /etc/modsecurity.d/include.conf;
-
 
     # Configuration pour le reverse proxy
     location / {
-        proxy_pass ${APP_URI};  # Redirige les requêtes vers le serveur cible (ici Juice Shop) /!\ static ip only !!!
+        proxy_pass http://juice_shop_cluster;  # Redirige les requêtes vers le serveur cible (ici les instances de Juice Shop définies dans l'upstream)
         proxy_http_version 1.1;  # le proxy communique avec le serveur en utilisant HTTP/1.1 (pour pouvoir utiliser les websockets notamment ...)
         proxy_set_header Upgrade $http_upgrade;  # Permet le support WebSocket
         proxy_set_header Connection 'upgrade'; 
         proxy_set_header Host $host;  # Envoie l'en-tête Host original
         proxy_cache_bypass $http_upgrade;  # Bypass du cache si mise à niveau
+
+        # Enable health checking
+        # health_check interval=5s fails=3 passes=2;
     }
+
+
+    location /nginx_status {    # route pour le monitoring du load-balancer
+        stub_status;    # expose les metrics pour le monitoring
+    }
+
 
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
