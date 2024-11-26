@@ -1,5 +1,8 @@
 provider "aws" {
   region     = var.region
+  # access_key = module.hcp_vault.aws_access_key
+  # secret_key = module.hcp_vault.aws_secret_key
+  # token      = module.hcp_vault.aws_token
 }
 
 

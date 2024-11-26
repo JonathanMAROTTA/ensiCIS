@@ -7,6 +7,10 @@ module "security" {
   vpc_id = module.vpc.vpc_id
 }
 
+module "hcp_vault" {
+  source = "./modules/hcp-vault"
+}
+
 data "aws_caller_identity" "current" {}
 
 module "eks" {
