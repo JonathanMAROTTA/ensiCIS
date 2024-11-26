@@ -1,10 +1,6 @@
 terraform_deploy:
   stage: deploy
-  image: alpine/gitlab-ansible-terraform:latest
-  before_script:
-    - echo "Installing AWS CLI"
-    - apk add --no-cache python3 py3-pip curl
-    - pip install awscli
+  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:v1.1
   script:
     - echo "Applying the terraform plan to generate the ansible inventory"
     
@@ -20,6 +16,4 @@ terraform_deploy:
     - cd ansible
     - ansible-playbook -i inventory.ini playbook.yml
 
-    - echo "DNS Name of the Load Balancer"
-    - aws elb describe-load-balancers --query "LoadBalancerDescriptions[1].DNSName" --output text 
   when: manual
