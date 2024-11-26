@@ -1,10 +1,6 @@
 terraform_destroy:
   stage: destroy
-  image: alpine/gitlab-ansible-terraform:latest
-  before_script:
-    - echo "Installing AWS CLI"
-    - apk add --no-cache python3 py3-pip curl
-    - pip install awscli
+  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:v1.1
   script:
     - echo "Configuring Kube config"
     - aws eks update-kubeconfig --region "us-east-1" --name "eks-simple"
