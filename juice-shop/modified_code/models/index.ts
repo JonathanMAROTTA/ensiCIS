@@ -28,10 +28,19 @@ import { Sequelize, Transaction } from 'sequelize'
 const dbPassword = process.env.DB_PASSWORD
 
 /* jslint node: true */
+const fs = require('fs');
+const rootCert = fs.readFileSync('/etc/ssl/certs/root.crt');
+
 const sequelize = new Sequelize('projetcis', 'projetcis', dbPassword, {
   host: 'database',
   port: 5432,
   dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      ca: rootCert, // Use the root certificate
+     }
+  },
   quoteIdentifiers: false,
   retry: {
     match: [/SequelizeConnectionError/],
