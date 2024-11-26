@@ -14,7 +14,7 @@
         msg: "Kubeconfig file not found at {{ kubeconfig_path }}. Ensure you have updated your kubeconfig."
       when: not kubeconfig_status.stat.exists
 
-    - name: Create Kubernetes namespace and deploy Juice Shop
+    - name: Create Kubernetes namespace an secrets, and deploy Juice Shop
       kubernetes.core.k8s:
         kubeconfig: "{{ kubeconfig_path }}"
-        definition: "{{ lookup('template', 'templates/juice-shop-deployment.yaml.j2') }}"
+        definition: "{{ lookup('template', 'templates/juice-shop-deployment.yml.j2') }}"
