@@ -8,7 +8,7 @@ server {
     ssl_certificate_key /etc/nginx/conf/server.key;
     
     # Enable ModSecurity
-    modsecurity on;tp_upstream_check_module.so
+    modsecurity on;
     modsecurity_rules_file /etc/modsecurity.d/include.conf;
 
     # Configuration pour le reverse proxy
