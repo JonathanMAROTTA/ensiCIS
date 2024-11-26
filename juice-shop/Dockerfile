@@ -10,7 +10,7 @@ WORKDIR /juice-shop
 # Build juice shop
 RUN npm install
 
-CMD ["npm", "start"]
-#CMD ["tail", "-f", "/dev/null"]
+#CMD ["npm", "start"]
+CMD ["tail", "-f", "/dev/null"]
 
 EXPOSE 3000

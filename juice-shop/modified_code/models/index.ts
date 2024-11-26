@@ -32,6 +32,7 @@ const sequelize = new Sequelize('projetcis', 'projetcis', dbPassword, {
   host: 'database',
   port: 5432,
   dialect: 'postgres',
+  ssl: true,
   quoteIdentifiers: false,
   retry: {
     match: [/SequelizeConnectionError/],
