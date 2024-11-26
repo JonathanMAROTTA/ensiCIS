@@ -1,0 +1,1 @@
+hcp vault-secrets run env > /dev/null
