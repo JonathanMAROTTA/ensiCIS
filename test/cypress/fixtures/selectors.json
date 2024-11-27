@@ -1,0 +1,54 @@
+{
+  "popups": {
+    "welcome": ".close-dialog",
+    "cookies": ".cc-btn"
+  },
+  "navbar": {
+    "account": "#navbarAccount",
+    "profile": "button.ng-tns-c122-2:nth-child(1)",
+    "logout": "#navbarLogoutButton"
+  },
+  "profile": {
+    "email": "#email"
+  },
+  "contact": {
+    "comment": "#comment",
+    "submit": "#submitButton",
+    "captcha": {
+      "question": "#captcha",
+      "controller": "#captchaControl"
+    },
+    "rating": {
+      "controller": "#rating",
+      "attributes": {
+        "min": "aria-valuemin",
+        "max": "aria-valuemax"
+      }
+    }
+  },
+  "register": {
+    "email": "#emailControl",
+    "password": "#passwordControl",
+    "repeatPassword": "#repeatPasswordControl",
+    "securityQuestion": "mat-select[name=\"securityQuestion\"]",
+    "securityOption": "mat-option",
+    "securityAnswer": "#securityAnswerControl",
+    "submit": "#registerButton"
+  },
+  "login": {
+    "email": "#email",
+    "password": "#password",
+    "submit": "#loginButton"
+  },
+  "complain": {
+    "message": "#complaintMessage",
+    "fileUpload": "input[type=\"file\"]",
+    "submit": "#submitButton"
+  },
+  "webSandbox": {
+    "webIDE": ".CodeMirror"
+  },
+  "scoreBoard": {
+    "anyGroup": ".score-group"
+  }
+}

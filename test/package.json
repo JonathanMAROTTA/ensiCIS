@@ -1,0 +1,20 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:test": "cypress run --spec",
+    "cy:tests": "cypress run --spec ./cypress/tests",
+    "cy:open": "cypress open",
+    "cy:cmd_tests": "cypress run --spec ./cypress/commands_tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.16.0",
+    "cypress-file-upload": "^5.0.8",
+    "dotenv": "^16.4.5"
+  }
+}

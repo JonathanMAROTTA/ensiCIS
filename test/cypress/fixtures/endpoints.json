@@ -1,0 +1,26 @@
+{
+  "api": {
+    "login": "/rest/user/login",
+    "whoami": "/rest/user/whoami",
+    "register": "/api/Users",
+    "anyFileUpload": "/file-upload*",
+    "productSearch": "/rest/products/search",
+    "feedback": "/api/Feedbacks"
+  },
+  "ui": {
+    "home": "/",
+    "login": "/#/login",
+    "register": "/#/register",
+    "complain": "/#/complain",
+    "search": "/#/search",
+    "contact": "/#/contact",
+
+    "unauthorized": {
+      "metrics": "/metrics",
+      "ftp": "/ftp",
+      "scoreBoard": "/#/score-board",
+      "securityPolicy": "/.well-known/security.txt",
+      "web3Sandbox": "/#/web3-sandbox"
+    }
+  }
+}
