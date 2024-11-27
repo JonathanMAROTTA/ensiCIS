@@ -14,7 +14,9 @@ terraform_deploy:
 
     - echo "Logging in Hashicorp Vault..."
     - hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
+
     - echo "Deploying the ansible playbook"
-    - hcp vault-secrets run 'cd ansible && ansible-playbook -i inventory.ini playbook.yml'
+    - cd ansible
+    - hcp vault-secrets run -- /bin/bash -c 'ansible-playbook -i inventory.ini playbook.yml'
 
   when: manual
