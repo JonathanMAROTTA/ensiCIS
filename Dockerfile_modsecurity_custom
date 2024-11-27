@@ -262,6 +262,8 @@ RUN set -eux; \
 # Install Site24x7 plugin
 RUN wget https://raw.githubusercontent.com/site24x7/plugins/master/nginx/installer/Site24x7NginxPluginInstaller.sh && mkdir -p /opt/site24x7/monagent && bash Site24x7NginxPluginInstaller.sh
 
+RUN chown -R nginx:nginx /var/log/nginx/
+
 USER nginx
 
 RUN mkdir -p /tmp/modsecurity/data; \

@@ -11,6 +11,8 @@ server {
     modsecurity on;
     modsecurity_rules_file /etc/modsecurity.d/include.conf;
 
+    proxy_cookie_flags ~ Secure HttpOnly;
+
     # Configuration pour le reverse proxy
     location / {
         proxy_pass http://juice_shop_cluster;  # Redirige les requêtes vers le serveur cible (ici les instances de Juice Shop définies dans l'upstream)
