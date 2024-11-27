@@ -15,10 +15,15 @@ db_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-lates
 db_port: 5432
 db_volume_claim: pgdata-pvc
 db_replicas: 1
+s3_backup_bucket: projetcis-backup
 
 # Secrets
-db_username: lookup('ansible.builtin.env', 'DATABASE_USERNAME')
-db_name: lookup('ansible.builtin.env', 'DATABASE_NAME')
 secret_name: juice-shop-secrets
+db_user: lookup('ansible.builtin.env', 'DATABASE_USERNAME')
+db_name: lookup('ansible.builtin.env', 'DATABASE_NAME')
 db_password: lookup('ansible.builtin.env', 'DATABASE_PASSWORD')
 
+# AWS Credentials
+aws_access_key_id: ASIAV35M5H25WM44QAOL
+aws_secret_access_key: cd9rL0DSxEnkHfBe0KiuIE3oRfQ3t4BQv4hX+QA7
+aws_session_token: IQoJb3JpZ2luX2VjEJj//////////wEaCXVzLXdlc3QtMiJGMEQCIFSWa4rIGRhTebndso5GqWw3554IGqqjdW7aLbLHc4eXAiAnQ7v/OaekCnB4YSb9xoZ82nA2GomCnT9AkBVyolAtiSq9AghBEAAaDDQwMzU1MjY4MTY1OSIMpeZtQhVHODR0/jBGKpoCrsCZ6cjxoNn0MlG3EUet1m5YCHHBomvNQtIAo3ZUWGo37/G2bGArbRT1cNqx/UPl36wJWYXlNdWnOZw1NqSVI4ey3kzD/NNFs/0mcHInQ4/5aPXt5yd3spJJmxjwwiaANi/qDCU1c5mSBlCLZ79eI7iuuKz3AdwFkxeMH26Qo4ZEX1/jxGqTf0L2xulv8tJsVTYE3weJkIuFA2HJfCNtBg/MVAEpmaDoRh1zoXT02noHn2C/2O9eXGfLd2d+iHts6bhHDYLs8f6EaQI2nKvqsG5YSai8Se3ojuUKR/fJodb30EFiQLePBPI0DQDH7LBYipdXYw+Le61dJCoPpC8l5K1Ed40H1bal2lOckUh37WoT9Lh7rC6ftiZHMP6om7oGOp4B+x0SoEFU56YFY75maSLeivKEYCRD1SNIwnDEKmoZIhMG+i068FOZYmVeyT5r6IhU0BGKBq6SkERuhPDKL/MZu2bxJIO5GfvsVwiwdYJkMei9N3jCFNb3ugsKtVpfv7tol9457/+fAL3cn3pXICrenlAu3wmecUJj1Va+xtYrP9LhBeFj2syp9rytmvsLhuEguJt+7sqg/Ac9TJUOevw=

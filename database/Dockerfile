@@ -24,7 +24,8 @@ RUN apt update && apt install hcp -y
 
 # Setup crontab to backup the database
 COPY backupDatabase.sh /var/lib/postgresql/
-RUN echo "0 3 * * * /var/lib/postgresql/backupDatabase.sh" > /etc/cron.d/backup-database
+# Make a backup every 30 minutes
+RUN echo "*/30 * * * * /var/lib/postgresql/backupDatabase.sh" > /etc/cron.d/backup-database
 RUN chmod 0644 /etc/cron.d/backup-database
 RUN crontab /etc/cron.d/backup-database
 
