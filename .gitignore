@@ -1,0 +1,8 @@
+# Npm files for testing
+test/node_modules
+test/package-lock.json
+test/cypress/results
+test/cypress/tests/zwip.cy.js
+
+# Environment variables
+test/.env
