@@ -68,6 +68,8 @@ spec:
         ports:
         - containerPort: {{ db_port }}
         env:
+        - name: AWS_BUCKET_NAME
+          value: {{ s3_backup_bucket }}
         - name: POSTGRES_USER
           value: {{ db_user }}
         - name: POSTGRES_PASSWORD

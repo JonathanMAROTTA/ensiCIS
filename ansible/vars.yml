@@ -14,8 +14,8 @@ db_service_name: database
 db_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
 db_port: 5432
 db_user: projetcis
-db_volume_claim: pgdata-pvc
 db_replicas: 1
+s3_backup_bucket: projetcis-backup
 
 # Secrets
 secret_name: juice-shop-secrets
