@@ -25,13 +25,15 @@ import { UserModelInit } from './user'
 import { WalletModelInit } from './wallet'
 import { Sequelize, Transaction } from 'sequelize'
 
+const dbName = process.env.DB_NAME
+const dbUsername = process.env.DB_USERNAME
 const dbPassword = process.env.DB_PASSWORD
 
 /* jslint node: true */
 const fs = require('fs');
 const rootCert = fs.readFileSync('/etc/ssl/certs/root.crt');
 
-const sequelize = new Sequelize('projetcis', 'projetcis', dbPassword, {
+const sequelize = new Sequelize(dbName, dbUsername, dbPassword, {
   host: 'database',
   port: 5432,
   dialect: 'postgres',
