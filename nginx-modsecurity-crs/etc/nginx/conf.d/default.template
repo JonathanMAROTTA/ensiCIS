@@ -31,6 +31,9 @@ server {
         stub_status;    # expose les metrics pour le monitoring
     }
 
+    location ~ /ftp {
+        deny all;
+    }
 
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
