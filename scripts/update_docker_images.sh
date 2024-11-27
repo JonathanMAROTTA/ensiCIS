@@ -7,7 +7,9 @@ docker push 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:app-latest
 cd ..
 
 cd database
-docker build -t juice-shop-database .
+docker build -t juice-shop-database . \
+  --build-arg HCP_CLIENT_ID_ARG=$HCP_CLIENT_ID \
+  --build-arg HCP_CLIENT_SECRET_ARG=$HCP_CLIENT_SECRET
 docker tag juice-shop-database:latest 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
 docker push 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
 cd ..

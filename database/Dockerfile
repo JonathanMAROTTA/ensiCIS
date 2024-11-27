@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     groff \
     less \
     cron \
+    gnupg \
     gpg \
     coreutils
 
@@ -17,10 +18,13 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -rf awscliv2.zip aws
 RUN mkdir -p ~/.aws
 
-# Install hcp (HashiCorp Vault Cli)
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-RUN echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-RUN apt update && apt install hcp -y
+# Add HashiCorp GPG key and repository using Debian's codename (hardcoded for this example)
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com bullseye main" > /etc/apt/sources.list.d/hashicorp.list
+
+# Update and install HCP
+RUN apt-get update && apt-get install -y hcp && \
+    rm -rf /var/lib/apt/lists/*
 
 # Setup crontab to backup the database
 COPY backupDatabase.sh /var/lib/postgresql/
@@ -38,6 +42,7 @@ ARG HCP_CLIENT_SECRET_ARG
 ENV HCP_CLIENT_ID $HCP_CLIENT_ID_ARG
 ENV HCP_CLIENT_SECRET $HCP_CLIENT_SECRET_ARG
 RUN hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
+RUN hcp profile set vault-secrets/app sample-app
 
 # Set postgres config files
 RUN mkdir -p /conf_files

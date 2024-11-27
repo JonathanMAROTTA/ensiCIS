@@ -19,8 +19,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     python3 \
     python3-pip \
+    gnupg \
     software-properties-common \
-    gpg \
     coreutils \
     && apt-get clean
 
@@ -40,8 +40,8 @@ RUN pip3 install awscli --upgrade
 RUN pip3 install kubernetes
 
 # Install hcp (HashiCorp Vault Cli)
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-RUN echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
 RUN apt update && apt install hcp -y
 
 # Verify installations

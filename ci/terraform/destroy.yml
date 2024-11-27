@@ -1,6 +1,6 @@
 terraform_destroy:
   stage: destroy
-  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:v1.1
+  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:latest
   script:
     - echo "Configuring Kube config"
     - aws eks update-kubeconfig --region "us-east-1" --name "eks-simple"
@@ -12,6 +12,7 @@ terraform_destroy:
 
     - echo "Destroying the terraform resources"
     - cd terraform
+    - terraform init
     - terraform destroy -auto-approve
     - cd ..
 

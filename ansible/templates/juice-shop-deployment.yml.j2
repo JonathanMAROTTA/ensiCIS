@@ -39,6 +39,8 @@ spec:
           value: "{{ db_service_name }}"
         - name: DB_PORT
           value: "{{ db_port }}"
+        - name: DB_USERNAME
+          value: {{ db_user }}
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:

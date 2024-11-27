@@ -1,6 +1,6 @@
 terraform_deploy:
   stage: deploy
-  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:v1.1
+  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:latest
   script:
     - echo "Applying the terraform plan to generate the ansible inventory"
     
@@ -14,6 +14,7 @@ terraform_deploy:
 
     - echo "Logging in Hashicorp Vault..."
     - hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
+    - hcp profile set vault-secrets/app sample-app
 
     - echo "Deploying the ansible playbook"
     - cd ansible

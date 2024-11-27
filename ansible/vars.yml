@@ -19,9 +19,9 @@ s3_backup_bucket: projetcis-backup
 
 # Secrets
 secret_name: juice-shop-secrets
-db_user: lookup('ansible.builtin.env', 'DATABASE_USERNAME')
-db_name: lookup('ansible.builtin.env', 'DATABASE_NAME')
-db_password: lookup('ansible.builtin.env', 'DATABASE_PASSWORD')
+db_user: "{{ lookup('ansible.builtin.env', 'DATABASE_USERNAME') }}"
+db_name: "{{ lookup('ansible.builtin.env', 'DATABASE_NAME') }}"
+db_password: "{{ lookup('ansible.builtin.env', 'DATABASE_PASSWORD') }}"
 
 # AWS Credentials
 aws_access_key_id: ASIAV35M5H25WM44QAOL
