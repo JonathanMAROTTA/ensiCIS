@@ -12,7 +12,6 @@ metadata:
 type: Opaque
 data:
   db_password: {{ db_password | b64encode }}
-  postgres_password: {{ postgres_password | b64encode }}
 
 ---
 apiVersion: apps/v1
@@ -70,6 +69,16 @@ spec:
         env:
         - name: AWS_BUCKET_NAME
           value: {{ s3_backup_bucket }}
+        - name: AWS_ACCESS_KEY_ID
+          value: {{ aws_access_key_id }}
+        - name: AWS_SECRET_ACCESS_KEY
+          value: {{ aws_secret_access_key }}
+        - name: AWS_SESSION_TOKEN
+          value: {{ aws_session_token }}  
+        - name: DB_NAME
+          value: {{ db_name }}
+        - name: DB_USERNAME
+          value: {{ db_user }}
         - name: POSTGRES_USER
           value: {{ db_user }}
         - name: POSTGRES_PASSWORD
