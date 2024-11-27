@@ -3,6 +3,6 @@
 # usage :
 # get-secrets-and-run.sh ./my-script.sh
 
-hcp auth login --client-id=QO1XS3f3E0XkHi5i8aRFyr6l19oU11W4 --client-secret=fD0tkBIB8kj3q2UwE7hGFQRcHi05rjy2bTmKG2LocM69Lox8Q7cyr6DJ1kLsW1A7
+hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
 
 hcp vault-secrets run bash $1

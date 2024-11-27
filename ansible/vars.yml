@@ -13,11 +13,12 @@ app_replicas: 1
 db_service_name: database
 db_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
 db_port: 5432
-db_user: projetcis
 db_volume_claim: pgdata-pvc
 db_replicas: 1
 
 # Secrets
+db_username: lookup('ansible.builtin.env', 'DATABASE_USERNAME')
+db_name: lookup('ansible.builtin.env', 'DATABASE_NAME')
 secret_name: juice-shop-secrets
-db_password: "pr0j3tc1s"
-postgres_password: "pr0j3tc1s"
+db_password: lookup('ansible.builtin.env', 'DATABASE_PASSWORD')
+

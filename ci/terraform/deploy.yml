@@ -12,8 +12,9 @@ terraform_deploy:
     - echo "Configuring Kube config"
     - aws eks update-kubeconfig --region "us-east-1" --name "eks-simple"
 
+    - echo "Logging in Hashicorp Vault..."
+    - hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
     - echo "Deploying the ansible playbook"
-    - cd ansible
-    - ansible-playbook -i inventory.ini playbook.yml
+    - hcp vault-secrets run 'cd ansible && ansible-playbook -i inventory.ini playbook.yml'
 
   when: manual
