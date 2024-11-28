@@ -13,9 +13,10 @@ app_replicas: 3
 db_service_name: database
 db_image: 540280401574.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
 db_port: 5432
+db_name: projetcis
 db_user: projetcis
-db_volume_claim: pgdata-pvc
 db_replicas: 1
+s3_backup_bucket: projetcis-backup
 
 # NGINX Configuration
 nginx_name: nginx
@@ -30,4 +31,7 @@ nginx_servername: nginx-reverse-proxy-and-waf
 # Secrets
 secret_name: juice-shop-secrets
 db_password: "pr0j3tc1s"
-postgres_password: "pr0j3tc1s"
+
+aws_access_key_id=ASIAX3SZYV2TN4IUOFGW
+aws_secret_access_key=K4j/Sg4QQ0ndM8f7IZD5cI+MuQCKYME2NZOqFo0t
+aws_session_token=IQoJb3JpZ2luX2VjEK///////////wEaCXVzLXdlc3QtMiJIMEYCIQDiNMz1NjdcSdYDRSsdc933jrwf4HGjAsDMbX1fdGJM9QIhANJ/vPvKMeop8GcjNXjf+g52KXbsRi4EhHqTEfNO1Yn9KrsCCFgQARoMNTQwMjgwNDAxNTc0IgzxxXgCp4cS3OpqB1wqmALPEEliMS3gM1LdoUG0y6NG423jSaQwJLC3R0aMs13H1UI8Qv67oSSKlVqkhO6RLoC9uei1/e+T8dciWvr0dAYC6N1veJ2+jpZ+D9UukD8VhscO6BlT1PobWdP1X6wWvUSEwshVfnp5HVeENVxgpjOe+0BxGPwmJKHpZ+i3yH1wpPKpQ4lKXCJizK4suBJkEhmceW+qL+7YSrNivdGZE63WiXnUmR1hrJ/3CjZ+s3jcXe0mEvNmH5UZ8RN+8By5fmR3FhQpnfnil6KlfCfeSxW9NPDLd1YvWHzwqyjjQbCgGpg+HTzEy7AeLxDxJj0AFLPSSMfw7VPBv9w4fmUHZlKzMl6+EkMM/xQznu6zfvbEyDMA3QhwlDNnMO+soLoGOpwB7S41kevQzODvxHHGkGpk8783FAWm54hW/s4gBkL0DF/LZMwPTzvpXp/WoODIuxDnL2jG1nHC79QJmf3xK5lBN5eucpuOtF7UAWcP9ayzaivYmli/Ow+8qtp0yl59x/c9mpeUft/JhbT5yW+JhqP3pVqUNuxGue0rR89Boi2AaUN6ENrjHq4QN3C00MALOhbHTcJjalaNv49jf86q# AWS Credentials

@@ -7,11 +7,15 @@ module "security" {
   vpc_id = module.vpc.vpc_id
 }
 
-#module "hcp_vault" {
-#  source = "./modules/hcp-vault"
-#}
+# module "hcp_vault" {
+#   source = "./modules/hcp-vault"
+# }
 
 data "aws_caller_identity" "current" {}
+
+data "aws_eks_cluster_auth" "eks" {
+  name = module.eks.cluster_id
+}
 
 module "eks" {
   source         = "./modules/eks"
@@ -36,6 +40,11 @@ module "juice_shop_repo" {
   }
 }
 
+#module "s3_bucket" {
+#  source      = "./modules/s3"
+#  bucket_name = "projetcis-backup"
+#}
+#
 #terraform {
 #  backend "s3" {
 #    bucket         = "cis-my-tfstate-bucket"
