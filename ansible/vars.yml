@@ -5,17 +5,27 @@ kubeconfig_path: "~/.kube/config"
 
 # App Configuration
 app_name: juice-shop-app
-app_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:app-latest
+app_image: 540280401574.dkr.ecr.us-east-1.amazonaws.com/juice-shop:app-latest
 app_port: 3000
-app_replicas: 1
+app_replicas: 3
 
 # Database Configuration
 db_service_name: database
-db_image: 403552681659.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
+db_image: 540280401574.dkr.ecr.us-east-1.amazonaws.com/juice-shop:database-latest
 db_port: 5432
 db_user: projetcis
 db_volume_claim: pgdata-pvc
 db_replicas: 1
+
+# NGINX Configuration
+nginx_name: nginx
+nginx_image: 540280401574.dkr.ecr.us-east-1.amazonaws.com/juice-shop:nginx-latest
+nginx_port_http_external: 80
+nginx_port_http_internal: 8080
+nginx_port_https_external: 443
+nginx_port_https_internal: 8443
+nginx_replicas: 1
+nginx_servername: nginx-reverse-proxy-and-waf
 
 # Secrets
 secret_name: juice-shop-secrets

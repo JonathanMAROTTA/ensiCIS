@@ -7,9 +7,9 @@ module "security" {
   vpc_id = module.vpc.vpc_id
 }
 
-module "hcp_vault" {
-  source = "./modules/hcp-vault"
-}
+#module "hcp_vault" {
+#  source = "./modules/hcp-vault"
+#}
 
 data "aws_caller_identity" "current" {}
 
@@ -36,12 +36,12 @@ module "juice_shop_repo" {
   }
 }
 
-terraform {
-  backend "s3" {
-    bucket         = "cis-my-tfstate-bucket"
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    # dynamodb_table = module.state_backend.dynamodb_table_name # Not enough permissions to create this
-  }
-}
+#terraform {
+#  backend "s3" {
+#    bucket         = "cis-my-tfstate-bucket"
+#    key            = "terraform.tfstate"
+#    region         = "us-east-1"
+#    encrypt        = true
+#    # dynamodb_table = module.state_backend.dynamodb_table_name # Not enough permissions to create this
+#  }
+#}

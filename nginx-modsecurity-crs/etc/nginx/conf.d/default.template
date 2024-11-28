@@ -1,5 +1,13 @@
 server {
-    listen 443 ssl;
+    listen 8080;
+    server_name  ${SERVERNAME};
+
+    # Redirect HTTP to HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 8443 ssl;
     server_name  ${SERVERNAME};
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
     ssl_prefer_server_ciphers on;
@@ -11,15 +19,27 @@ server {
     modsecurity on;
     modsecurity_rules_file /etc/modsecurity.d/include.conf;
 
+    # Set cookie parameters
+    proxy_cookie_flags ~ Secure HttpOnly;
 
-    # Configuration pour le reverse proxy
+    # Configuration pour le reverse proxyS
     location / {
-        proxy_pass ${APP_URI};  # Redirige les requêtes vers le serveur cible (ici Juice Shop) /!\ static ip only !!!
+        proxy_pass http://juice_shop_cluster;  # Redirige les requêtes vers le serveur cible (ici les instances de Juice Shop définies dans l'upstream)
         proxy_http_version 1.1;  # le proxy communique avec le serveur en utilisant HTTP/1.1 (pour pouvoir utiliser les websockets notamment ...)
         proxy_set_header Upgrade $http_upgrade;  # Permet le support WebSocket
         proxy_set_header Connection 'upgrade'; 
         proxy_set_header Host $host;  # Envoie l'en-tête Host original
         proxy_cache_bypass $http_upgrade;  # Bypass du cache si mise à niveau
+    }
+
+    # Expose specific page for load-balancer stats
+    location /nginx_status {    # route pour le monitoring du load-balancer
+        stub_status;    # expose les metrics pour le monitoring
+    }
+
+    # Deny direct access to FTP
+    location ~ /ftp {
+        deny all;
     }
 
     error_page   500 502 503 504  /50x.html;
