@@ -1,12 +1,3 @@
-# Configuration pour rediriger HTTP vers HTTPS
-server {
-    listen 80;
-    server_name ${SERVERNAME};
-
-    # Redirige toutes les requêtes HTTP vers HTTPS
-    return 301 https://$host$request_uri;
-}
-
 # Configuration HTTPS
 server {
     listen 443 ssl;

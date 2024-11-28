@@ -6,3 +6,9 @@ test/cypress/tests/zwip.cy.js
 
 # Environment variables
 test/.env
+**.terraform
+*.tfstate
+*.tfstate.*
+**.terraform.lock.hcl
+.env
+

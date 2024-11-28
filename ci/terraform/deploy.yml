@@ -1,0 +1,19 @@
+terraform_deploy:
+  stage: deploy
+  image: gitlab.ensimag.fr:5050/marottaj/3a_projet_cis:v1.1
+  script:
+    - echo "Applying the terraform plan to generate the ansible inventory"
+    
+    - cd terraform
+    - terraform init
+    - terraform apply -auto-approve    
+    - cd ..
+
+    - echo "Configuring Kube config"
+    - aws eks update-kubeconfig --region "us-east-1" --name "eks-simple"
+
+    - echo "Deploying the ansible playbook"
+    - cd ansible
+    - ansible-playbook -i inventory.ini playbook.yml
+
+  when: manual

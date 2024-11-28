@@ -1,0 +1,159 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ namespace }}
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ secret_name }}
+  namespace: {{ namespace }}
+type: Opaque
+data:
+  db_password: {{ db_password | b64encode }}
+  postgres_password: {{ postgres_password | b64encode }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ app_name }}
+  namespace: {{ namespace }}
+spec:
+  replicas: {{ app_replicas }}
+  selector:
+    matchLabels:
+      app: {{ app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ app_name }}
+    spec:
+      containers:
+      - name: {{ app_name }}
+        image: {{ app_image }}
+        ports:
+        - containerPort: {{ app_port }}
+        env:
+        - name: DB_HOST
+          value: "{{ db_service_name }}"
+        - name: DB_PORT
+          value: "{{ db_port }}"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ secret_name }}
+              key: db_password
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ db_service_name }}
+  namespace: {{ namespace }}
+spec:
+  replicas: {{ db_replicas }}
+  selector:
+    matchLabels:
+      app: {{ db_service_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ db_service_name }}
+    spec:
+      containers:
+      - name: {{ db_service_name }}
+        image: {{ db_image }}
+        ports:
+        - containerPort: {{ db_port }}
+        env:
+        - name: POSTGRES_USER
+          value: {{ db_user }}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ secret_name }}
+              key: db_password
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ nginx_name }}
+  namespace: {{ namespace }}
+spec:
+  replicas: {{ nginx_replicas }}
+  selector:
+    matchLabels:
+      app: {{ nginx_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ nginx_name }}
+    spec:
+      containers:
+      - name: {{ nginx_name }}
+        image: {{ nginx_image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ nginx_port_http_internal }}
+        - containerPort: {{ nginx_port_https_internal }}
+        env:
+        - name: SERVERNAME
+          value: "{{ nginx_servername }}"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ app_name }}
+  namespace: {{ namespace }}
+spec:
+  selector:
+    app: {{ app_name }}
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: {{ app_port }}
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ db_service_name }}
+  namespace: {{ namespace }}
+spec:
+  selector:
+    app: {{ db_service_name }}
+  ports:
+  - protocol: TCP
+    port: {{ db_port }}
+    targetPort: {{ db_port }}
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ nginx_name }}
+  namespace: {{ namespace }}
+annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "alb" # Utiliser un Network Load Balancer (facultatif)
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:540280401574:certificate/57abb7c6-5703-4c59-8a5a-1cb812504599" # ARN du certificat SSL pour HTTPS
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443" # HTTPS sur le port 443
+spec:
+  selector:
+    app: {{ nginx_name }}
+  ports:
+  - protocol: TCP
+    port: {{ nginx_port_http_external }}
+    targetPort: {{ nginx_port_http_internal }}
+    name: http
+  - protocol: TCP
+    port: {{ nginx_port_https_external }}
+    targetPort: {{ nginx_port_https_internal }}
+    name: https
+  type: LoadBalancer
